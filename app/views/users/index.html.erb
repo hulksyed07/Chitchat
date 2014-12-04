@@ -1,0 +1,36 @@
+<html>
+<head>
+<%= stylesheet_link_tag "style" %>
+</head>
+<div id="header">
+<header>
+<h1>Welcome to Chitchat
+..........................................................................................
+<img src="/images/Communication.jpeg" >
+</h1>
+</header>
+</div>
+<body>
+<br>
+<table align="center">
+<% @users.each do |user|%>
+ <tr>
+  <td><b><%= user.name%></b></td>
+  <td><%= user.gender%></td>
+  <td><%=link_to 'Show',user_path(user)%></td>
+  <td><%=link_to 'Delete',user_path(user),method: :delete %></td>
+ </tr>
+<% end %>
+</table>
+<h3>Add a new User</h3>
+<%=link_to 'New User',new_user_path%>
+</body>
+<div id="footer">
+<footer>
+@All Rights Reserved<br>
+<%=link_to 'Home',users_path %>
+</footer>
+</div>
+</html>
+
+

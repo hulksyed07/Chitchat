@@ -1,0 +1,53 @@
+<html>
+<head>
+<%= stylesheet_link_tag "style" %>
+</head>
+<div id="header">
+<header>
+<h1>Welcome to Chitchat
+..........................................................................................
+<img src="/images/Communication.jpeg" >
+</h1>
+</header>
+</div>
+<body>
+<br>
+
+
+
+
+
+<%=form_for :user,url:users_path do |f|%>
+  <table>
+  <tr>
+   <td>
+   <%= f.label:name %>
+   </td>
+   <td>
+   <%= f.text_field:name %>
+   </td>
+  </tr>
+  <tr>
+   <td>
+   <%= f.label:gender %>
+   </td>
+   <td>
+   <%= f.text_field:gender %>
+   </td>
+  </tr>
+  <tr>
+   <td>
+   <%= f.submit "Register" %>
+   </td>
+  </tr>
+  </table>
+<% end %>
+
+</body>
+<div id="footer">
+<footer>
+@All Rights Reserved<br>
+<%=link_to 'Home',users_path %>
+</footer>
+</div>
+</html>

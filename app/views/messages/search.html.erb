@@ -1,0 +1,79 @@
+<html>
+<head>
+<%= stylesheet_link_tag "style" %>
+</head>
+<div id="container">
+<div id="header">
+<header>
+<h1>Welcome to Chitchat
+......................................................................................
+<img src="/images/Communication.jpeg" >
+</h1>
+</header>
+</div>
+<div id="body">
+<body>
+<br>
+
+
+
+
+
+
+<h2>Filter by Friend</h2>
+<table align="center" >
+<tr>
+<th>
+Recieved Messages
+</th>
+<th>
+Sent Messages
+</th>
+</tr>
+<tr>
+<td>
+<div id="recieved1" style="background-color:#FFC6B8">
+<% @user.messages.each do |message|%>
+    <% if message.sender_id==@friend.id%>
+       <b>Sender:</b><%=message.sender_id%><br>
+       Message:<%=message.body%><br><br>
+	<% end %>   
+<% end%>
+</div>
+</td>
+<td>
+<div id="sent1" style="background-color:#F7FBEB" >
+<% @user.sent_messages.each do |message|%>
+    <% if message.recipient_id==@friend.id %>
+       <b>Recipient:</b><%=message.recipient_id%><br>
+       Message:<%=message.body%><br><br>
+	<% end %>
+<% end%>
+</div>
+<td>
+<tr>
+</table>
+
+<h4>Send a message<h4>
+<%= form_for([@user,@user.messages.build]) do |f|%>
+	    <%=f.hidden_field :sender_id,:value=>@user.id%>
+		<%=f.hidden_field :recipient_id,:value=>@friend.id%>
+		<%=f.text_area :body%>
+        <%=f.submit "Send Message"%>
+<% end %>
+
+ 
+ 
+ 
+ 
+ 
+ </body>
+ </div>
+<div id="footer">
+  <footer>
+   @All Rights Reserved<br>
+   <%=link_to 'Home',users_path %><br>
+   <%=link_to 'My Chitchat',user_path(@user)%>
+  </footer>
+</div>
+</html>

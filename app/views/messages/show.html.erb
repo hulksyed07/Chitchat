@@ -1,0 +1,32 @@
+<table align="center" >
+<tr>
+<th>
+Recieved Messages
+</th>
+<th>
+Sent Messages
+</th>
+</tr>
+<tr>
+<td>
+<div id="recieved" style="background-color:#FFC6B8">
+<% @user.messages.each do |message|%>
+  <b>Sender:</b><%=message.sender_id%><br>
+  Message:<%=message.body%><br><br>
+<% end%>
+</div>
+</td>
+<td>
+<div id="sent" style="background-color:#F7FBEB" >
+<% @user.sent_messages.each do |message|%>
+  <b>Recipient:</b><%=message.recipient_id%><br>
+  Message:<%=message.body%><br><br>
+<% end%>
+</div>
+<td>
+<tr>
+</table>
+
+
+
+

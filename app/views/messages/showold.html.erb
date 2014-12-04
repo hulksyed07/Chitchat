@@ -1,0 +1,26 @@
+<table align="center">
+<%@messages.each do |message|%>
+  <tr>
+  <td>
+  <%if message.recipient_id==@user.id%>
+     <b>Your Recieved Message : </b>
+     Sender: <%=message.sender_id%><br>
+	 Message: <%=message.body%><br><br>
+  <% end %>
+  </td>
+  <td>
+  </td>
+  </tr>
+  <tr>
+  <td>
+  </td>
+  <td>
+  <%if message.sender_id==@user.id%>
+     <b>Your Sent Message</b>
+     Recipient: <%=message.recipient_id%><br>
+	 Message: <%=message.body%><br><br>
+  <% end %>
+  </td>
+  </tr>
+<% end %>
+</table>

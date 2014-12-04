@@ -1,0 +1,134 @@
+<html>
+<head>
+<%= stylesheet_link_tag "style" %>
+</head>
+<div id="container">
+<div id="header">
+<header>
+<h1>Welcome to Chitchat
+......................................................................................
+<img src="/images/Communication.jpeg" >
+</h1>
+</header>
+</div>
+<div id="body">
+<body>
+<br>
+
+
+
+
+
+
+
+<div id="name">
+Welcome <b><%=@user.name %></b> ( Gender: <%=@user.gender%> )
+<br>_______________________________________________________________________________________________________________________<br>
+</div>
+<h2>Search</h2>
+<%=form_for :user,url:search_user_path(@user) do |f|%>
+ <%=f.label :name%>
+ <%=f.text_field :name%>
+ <%=f.submit "Search"%>
+<%end%>
+<br>_________________________________________________________________________________________________________________________<br>
+
+<div id="friends">
+<h2>Friends</h2>
+ 
+  
+  <% @m.each do |m|%>
+     <b><%=m["name"]%></b><br>
+	 <b><%=m["friend_id"]%></b><br>
+	 <%=form_for :message,url:messages_path do |f|%>
+	    <%=f.hidden_field :user_id,:value=> @user.id%>
+        <%=f.hidden_field :friend_id,:value=> m["friend_id"]%>
+	    <b>Message</b>
+	    <%=f.text_area :body%>
+        <%=f.submit "Send Message"%>
+     <%end%>
+	 <div id="conversation" align="right">
+	 <%=form_for :message,url:message_search_path(@user) do |f|%>
+        <%=f.hidden_field :user_id,:value=> @user.id%>
+        <%=f.hidden_field :friend_id,:value=> m["friend_id"]%>
+        <%=f.submit "Open Conversation"%>
+     <%end%>
+	 </div>
+	 <%=link_to "Remove Friend",friendship_path(m["id"]),method: :delete%><br><br>
+  <% end %>
+
+  
+ <br>_________________________________________________________________________________________________________________________<br>
+ </div>
+<h2>New Friend Requests</h2>
+<% @friendships.each do |friendship| %>
+ <% if friendship.friend_id==@user.id && friendship.status==0 %>
+   <%@users.each do |user|%>
+     <%if friendship.user_id==user.id%>
+       <b><%=user.name%></b>
+	 <% end %>
+   <% end %>
+   <%=form_for :friendship,url:friendship_path(friendship.id),method: :patch do |f|%>
+     
+	 <%=f.hidden_field :user_id,:value=> friendship.user_id%>
+    
+     <%=f.hidden_field :friend_id,:value=> friendship.friend_id%>
+	 
+	 <%=f.hidden_field :status,:value=> 1%>
+     <%=f.submit "confirm"%>
+   <%end%>
+   <%=link_to "Delete Request",friendship_path(friendship.id),method: :delete%>
+ <% end %>  
+<% end %> 
+<br>_________________________________________________________________________________________________________________________<br>
+<h2>Friend Requests sent</h2>
+  <%@f.each do|f|%>
+    <%=f.friend_id%>
+	 <%=link_to "Delete Request",friendship_path(f.id),method: :delete%>
+  <%end%>
+<br>_________________________________________________________________________________________________________________________<br>
+
+<div id="all">
+<h2>Here are the list of person registered on chitchat other than you</h2>
+
+<%@users.each do |user|%>
+ <%if user.id!=@user.id%>
+   <b><%=user.name%></b>
+   <%=user.gender%><br>
+   <% b=0 %>
+   <% @friendships.each do |friendship|%>
+     <% if (friendship.friend_id==user.id && friendship.user_id==@user.id ) || (friendship.user_id==user.id && friendship.friend_id==@user.id) %>
+	   <% b=1 %>
+	 <% end %>
+   <% end %>
+   <% if b==0 %>
+     <%=form_for :friendship,url:friendships_path do |f|%>
+     
+	   <%=f.hidden_field :user_id,:value=> @user.id%>
+     
+       <%=f.hidden_field :friend_id,:value=> user.id%>
+	 
+	   <%=f.hidden_field :status,:value=> 0%>
+       <%=f.submit "Add Friend"%>
+     <%end%>
+     <br>
+   <% end %>
+   ........................................................................................................................<br>
+  <%end%>
+ <%end%>
+ 
+ </div>
+ 
+ 
+ 
+ 
+ 
+ </body>
+ </div>
+<div id="footer">
+  <footer>
+   @All Rights Reserved<br>
+   <%=link_to 'Home',users_path %>
+  </footer>
+</div>
+</html>

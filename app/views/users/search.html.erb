@@ -1,0 +1,50 @@
+<html>
+<head>
+<%= stylesheet_link_tag "style" %>
+</head>
+<div id="container">
+<div id="header">
+<header>
+<h1>Welcome to Chitchat
+......................................................................................
+<img src="/images/Communication.jpeg" >
+</h1>
+</header>
+</div>
+<div id="body">
+<body>
+<br>
+
+
+
+You are Searching for <%=@user.name%>
+<h3>Users with same name: </h3>
+<%i=0%>
+<ul>
+  <% @s.each do |r|%>
+    <%i=i+1%>
+    <b>Name:</b><%=r.name%><br>
+	<b>Gender:</b><%=r.gender%><br><br>
+  <%end%>
+  
+</ul>
+<% if i==0 %>
+  <h4>No Match Found</h4>
+<% elsif i==1 %>
+  <h4>1 Match found</h4>
+<% else %>
+  <h4><%=i%> Matches found</h4>
+<% end %>
+
+
+
+ </body>
+ </div>
+<div id="footer">
+  <footer>
+   @All Rights Reserved<br>
+   <%=link_to 'Home',users_path %>
+   <%=link_to 'My Chitchat',user_path(@originalUser)%>
+  </footer>
+</div>
+</html>
